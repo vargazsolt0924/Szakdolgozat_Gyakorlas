@@ -1,20 +1,16 @@
-const { Given, Then } = require('@cucumber/cucumber');
+const { test } = require('@playwright/test');
 const { HomePage } = require('../Objects/HomePage');
 const { VideosPage } = require('../Objects/VideosPage');
 
 const URL = "https://wearecommunity.io/";
 
-Given('the {string} site is opened', async function (site) {
-    const homePage = new HomePage(this.page);
-    await homePage.navigateToMainSite(URL);
-});
+test('Navigate to Videos page and search for English videos', async ({ page }) => {
+ const homePage = new HomePage(page);
+ await homePage.navigateToMainSite(URL);
+ await homePage.clickVideosButton();
 
-Given('the {string} button is clicked', async function (buttonName) {
-    const homePage = new HomePage(this.page);
-    await homePage.clickVideosButton();
-});
+ const videosPage = new VideosPage(page);
+ const searchKeyword = 'English';
+ await videosPage.searchForVideos(searchKeyword);
 
-Then('I search for {string}', async function (keyword) {
-    const videosPage = new VideosPage(this.page);
-    await videosPage.searchForVideos(keyword);
 });
