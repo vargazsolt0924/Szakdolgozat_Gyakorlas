@@ -1,21 +1,16 @@
-const { test, expect } = require('@playwright/test');
+const { test } = require('@playwright/test');
+const { HomePage } = require('../Objects/HomePage');
+const { VideosPage } = require('../Objects/VideosPage');
 
 const URL = "https://wearecommunity.io/";
 
-test('Videó keresés', async ({ page }) => {
-    
-    await page.goto(URL);
-    
-    await page.waitForSelector('text="Videos"');
-    
-    await Promise.all([
-      page.click('text="Videos"'),
-      page.waitForNavigation({ waitUntil: 'networkidle' }),
-    ]);
-  
-    await page.fill('.evnt-search', 'English');
-    await page.press('.evnt-search', 'Enter');
-    
-    await page.waitForSelector(`text="English"`);
+test('Navigate to Videos page and search for English videos', async ({ page }) => {
+ const homePage = new HomePage(page);
+ await homePage.navigateToMainSite(URL);
+ await homePage.clickVideosButton();
 
-  });
+ const videosPage = new VideosPage(page);
+ const searchKeyword = 'English';
+ await videosPage.searchForVideos(searchKeyword);
+
+});
