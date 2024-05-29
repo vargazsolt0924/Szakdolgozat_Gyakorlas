@@ -14,5 +14,8 @@
     "@playwright/test": "^1.44.1",
     "@types/node": "^20.12.12",
     "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "playwright": "^1.44.1"
   }
 }
