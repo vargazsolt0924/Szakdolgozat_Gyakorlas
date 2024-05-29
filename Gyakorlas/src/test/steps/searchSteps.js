@@ -1,5 +1,4 @@
 const { Given, When, Then } = require('@cucumber/cucumber');
-const { chromium } = require('@playwright/test');
 const MainPage = require('../objects/MainPage.js');
 const ArticlesPage = require('../objects/ArticlesPage.js');
 
@@ -44,8 +43,4 @@ Then(/^the Language Filter Dropdown is opened$/, async () => {
 
 When(/^I select the '([^']*)' checkbox$/, async (language) => {
     await ArticlesPage.selectLanguageCheckbox(language);
-});
-
-Then(/^I see (\d+) article card$/, async (expectedCardCount) => {
-    await ArticlesPage.waitForArticleCardsCount(expectedCardCount);
 });
