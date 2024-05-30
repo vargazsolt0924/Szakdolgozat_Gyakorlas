@@ -1,10 +1,10 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
-const { chromium } = require('@playwright/test');
+const { Given, When, Then, world } = require('@cucumber/cucumber');
 const MainPage = require('../objects/MainPage.js');
 const ArticlesPage = require('../objects/ArticlesPage.js');
 
 Given(/^the 'Main' site is opened$/, async () => {
-    await MainPage.open();
+    const mainPage = new MainPage(world.page);
+    await mainPage.open();
 });
 
 Given(/^the 'Articles' button is clicked$/, async () => {
@@ -44,8 +44,4 @@ Then(/^the Language Filter Dropdown is opened$/, async () => {
 
 When(/^I select the '([^']*)' checkbox$/, async (language) => {
     await ArticlesPage.selectLanguageCheckbox(language);
-});
-
-Then(/^I see (\d+) article card$/, async (expectedCardCount) => {
-    await ArticlesPage.waitForArticleCardsCount(expectedCardCount);
 });
