@@ -1,57 +1,50 @@
 class ArticlesPage {
-    get searchInput() { return $('.evnt-search-filter .form-control.evnt-search'); }
-    get articleCards() { return $$('.evnt-articles-wrapper .evnt-card-wrapper'); }
-    get articleCardTitles() { return $$('.evnt-articles-wrapper .evnt-article-name'); }
-    get tagFilter() { return $('#filter_tag'); }
-    get tagFilterInput() { return $('.evnt-filter-menu.show .evnt-search'); }
-    get tagFilterHighlightedItem() { return $('.highlight-text'); }
-    get moreFiltersOption() { return $('//*[@id="agenda_filters"]/div/div[1]/div[1]/div/div/div[4]'); }
-    get languageFilter() { return $('#filter_language'); }
-    get languageFilterCheckBox() { return $('.evnt-filter-item'); }
-    get checkBoxName() { return $$('.evnt-filter-item .form-check-label'); }
- 
-    open() {
-        browser.url('https://wearecommunity.io/articles');
+    constructor(page) {
+        this.page = page;
+        this.searchInput = page.locator('.evnt-search-filter .form-control.evnt-search');
+        this.articleCards = page.locator('.evnt-articles-wrapper .evnt-card-wrapper');
+        this.articleCardTitles = page.locator('.evnt-articles-wrapper .evnt-article-name');
+        this.tagFilter = page.locator('#filter_tag');
+        this.tagFilterInput = page.locator('.evnt-filter-menu.show .evnt-search');
+        this.tagFilterHighlightedItem = page.locator('.highlight-text');
+        this.moreFiltersOption = page.locator('//*[@id="agenda_filters"]/div/div[1]/div[1]/div/div/div[4]');
+        this.languageFilter = page.locator('#filter_language');
+        this.languageFilterCheckBox = page.locator('.evnt-filter-item');
+        this.checkBoxName = page.locator('.evnt-filter-item .form-check-label');
     }
- 
-    searchForInput(input) {
-        this.searchInput.setValue(input);
-        browser.keys('Enter'); // Ensure the search is triggered
+
+    async searchForInput(input) {
+        await this.searchInput.fill(input);
+        
     }
- 
-    getArticleCardTitles() {
-        return this.articleCardTitles.map(el => el.getText());
+
+    async getArticleCardTitles() {
+        return 
     }
- 
-    clickTagFilter() {
-        this.tagFilter.click();
+
+    async clickTagFilter() {
+        await this.tagFilter.click();
     }
- 
-    setTagFilterInput(tag) {
-        this.tagFilterInput.setValue(tag);
+
+    async setTagFilterInput(tag) {
+        await this.tagFilterInput.fill(tag);
     }
- 
-    clickHighlightedCheckbox() {
-        this.tagFilterHighlightedItem.click();
+
+    async clickHighlightedCheckbox() {
+        await this.tagFilterHighlightedItem.click();
     }
- 
-    clickMoreFiltersOption() {
-        this.moreFiltersOption.click();
+
+    async clickMoreFiltersOption() {
+        await this.moreFiltersOption.click();
     }
- 
-    clickLanguageFilter() {
-        this.languageFilter.click();
+
+    async clickLanguageFilter() {
+        await this.languageFilter.click();
     }
- 
-    selectLanguageCheckbox(language) {
-        const checkboxes = this.checkBoxName;
-        for (let checkbox of checkboxes) {
-            if (checkbox.getText().toLowerCase().includes(language.toLowerCase())) {
-                checkbox.click();
-                break;
-            }
-        }
+
+    async selectLanguageCheckbox(language) {
+      
     }
- }
- 
- module.exports = new ArticlesPage();
+}
+
+module.exports = ArticlesPage;

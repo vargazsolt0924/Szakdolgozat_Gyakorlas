@@ -1,8 +1,8 @@
-const { Given, When, Then, world } = require('@cucumber/cucumber');
+const { Given, When, Then, world} = require('@cucumber/cucumber');
 const MainPage = require('../objects/MainPage.js');
 const ArticlesPage = require('../objects/ArticlesPage.js');
 
-Given(/^the 'Main' site is opened$/, async () => {
+Given(/^the 'Main' site is opened$/, async () => {    
     const mainPage = new MainPage(world.page);
     await mainPage.open();
 });

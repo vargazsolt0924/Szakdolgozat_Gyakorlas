@@ -3,7 +3,7 @@ const { chromium } = require("@playwright/test")
 class MainPage {
     constructor(page) {
         this.page = page;
-        this.articleButton = this.page.locator('//*[@id="app"]/header/div/div/ul[1]/li[6]/a');
+        this.articleButton = this.page.getByText('Articles').click();
     }
 
     async open() {
