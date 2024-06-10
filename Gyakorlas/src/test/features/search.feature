@@ -39,4 +39,4 @@ Feature: Search on the articles page
 
      Examples:
        | checkboxName | cardCount |
-       | Spanish      |  1        |
+       | German       |  2        |

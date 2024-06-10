@@ -15,11 +15,17 @@ class ArticlesPage {
 
     async searchForInput(input) {
         await this.searchInput.fill(input);
-        
+        await this.searchInput.press('Enter');
     }
 
-    async getArticleCardTitles() {
-        return 
+    async waitForArticleCardsCount(expectedCardCount) {
+        const numberOfcards = this.articleCards;
+        const count = await numberOfcards.count()
+        expect(count).to.eq(expectedCardCount)
+    }
+
+    async verifyAllCardsContainWord(word) {
+       
     }
 
     async clickTagFilter() {
@@ -38,12 +44,21 @@ class ArticlesPage {
         await this.moreFiltersOption.click();
     }
 
+    async waitForMoreFiltersOption() {
+        await this.page.waitForSelector(this.moreFiltersOption);
+    }
+
     async clickLanguageFilter() {
         await this.languageFilter.click();
     }
 
+    async waitForLanguageFilterDropdown() {
+        await this.page.waitForSelector(this.languageFilterCheckBox);
+    }
+
     async selectLanguageCheckbox(language) {
-      
+        const checkbox = this.page.locator(`.evnt-filter-item .form-check-label:has-text("${language}")`);
+        await checkbox.check();
     }
 }
 

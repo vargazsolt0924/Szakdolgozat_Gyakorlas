@@ -1,13 +1,11 @@
-const { chromium } = require("@playwright/test")
-
 class MainPage {
     constructor(page) {
         this.page = page;
-        this.articleButton = this.page.getByText('Articles').click();
+        this.articleButton = page.locator("li.nav-item.articles-icon a[href='/articles']");
     }
 
     async open() {
-        return this.page.goto('https://wearecommunity.io/');
+        await this.page.goto('https://wearecommunity.io/', {timeout:20000});
     }
 
     async clickArticlesButton() {
