@@ -5,7 +5,7 @@ class MainPage {
     }
 
     async open() {
-        await this.page.goto('https://wearecommunity.io/', {timeout:20000});
+        await this.page.goto('https://wearecommunity.io/');
     }
 
     async clickArticlesButton() {

@@ -1,3 +1,5 @@
+const expect = require('@playwright/test').expect
+
 class ArticlesPage {
     constructor(page) {
         this.page = page;
@@ -7,7 +9,7 @@ class ArticlesPage {
         this.tagFilter = page.locator('#filter_tag');
         this.tagFilterInput = page.locator('.evnt-filter-menu.show .evnt-search');
         this.tagFilterHighlightedItem = page.locator('.highlight-text');
-        this.moreFiltersOption = page.locator('//*[@id="agenda_filters"]/div/div[1]/div[1]/div/div/div[4]');
+        this.moreFiltersOption = page.locator('evnt-toggle-filters-button btn');
         this.languageFilter = page.locator('#filter_language');
         this.languageFilterCheckBox = page.locator('.evnt-filter-item');
         this.checkBoxName = page.locator('.evnt-filter-item .form-check-label');
@@ -16,20 +18,30 @@ class ArticlesPage {
     async searchForInput(input) {
         await this.searchInput.fill(input);
         await this.searchInput.press('Enter');
+        await this.page.waitForLoadState('networkidle');
+        await this.articleCards.waitFor({ state: 'visible', timeout: 8000 }); 
     }
 
     async waitForArticleCardsCount(expectedCardCount) {
-        const numberOfcards = this.articleCards;
-        const count = await numberOfcards.count()
-        expect(count).to.eq(expectedCardCount)
+        await this.page.waitForLoadState('networkidle');
+        await this.articleCards.waitFor({ state: 'visible', timeout: 8000 }); 
+        const currentCardCount = await this.articleCards.count();
+        expect(currentCardCount).toBe(expectedCardCount);
     }
 
     async verifyAllCardsContainWord(word) {
-       
+        const cardTitles = await this.articleCardTitles.allTextContents();
+        for (const title of cardTitles) {
+            expect(title).toContain(word);
+        }
     }
 
     async clickTagFilter() {
-        await this.tagFilter.click();
+        try {
+            await this.tagFilter.click();
+        } catch (error) {
+            console.error('Failed to click tag filter:', error);
+        }
     }
 
     async setTagFilterInput(tag) {

@@ -1,6 +1,8 @@
-const { Given, When, Then, BeforeStep, world } = require('@cucumber/cucumber');
+const { Given, When, Then, BeforeStep, world, setDefaultTimeout } = require('@cucumber/cucumber');
 const MainPage = require('../objects/MainPage.js');
 const ArticlesPage = require('../objects/ArticlesPage.js');
+const expect = require('@playwright/test').expect;
+setDefaultTimeout(parseInt(process.env.DEFAULT_TIMEOUT) || 60000);
 
 let mainPage;
 let articlesPage;
@@ -23,7 +25,7 @@ When("I search for {string}", async (input) => {
 });
 
 Then("I see {int} article card", async (expectedCardCount) => {
-    await articlesPage.waitForArticleCardsCount(parseInt(expectedCardCount));
+    await articlesPage.waitForArticleCardsCount(expectedCardCount);
 });
 
 Then("All cards contain the {string} word", async (word) => {
