@@ -18,15 +18,13 @@ class ArticlesPage {
     async searchForInput(input) {
         await this.searchInput.fill(input);
         await this.searchInput.press('Enter');
-        await this.page.waitForLoadState('networkidle');
-        await this.articleCards.waitFor({ state: 'visible', timeout: 8000 }); 
     }
 
     async waitForArticleCardsCount(expectedCardCount) {
-        await this.page.waitForLoadState('networkidle');
-        await this.articleCards.waitFor({ state: 'visible', timeout: 8000 }); 
-        const currentCardCount = await this.articleCards.count();
-        expect(currentCardCount).toBe(expectedCardCount);
+        await this.page.waitForTimeout(2000);
+        const currentCardCount = await this.articleCards.all();
+        console.log(currentCardCount)
+        expect(currentCardCount.length).toBe(expectedCardCount);
     }
 
     async verifyAllCardsContainWord(word) {
